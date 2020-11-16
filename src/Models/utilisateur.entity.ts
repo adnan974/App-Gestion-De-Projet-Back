@@ -1,8 +1,8 @@
-import {Entity,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn,Column,ManyToOne} from "typeorm";
+import {Entity,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn,Column,ManyToOne,BaseEntity} from "typeorm";
 import {Civilite} from "./civilite.entity"
 
-@Entity("User")
-export class Utilisateur{
+@Entity("Utilisateur")
+export class Utilisateur extends BaseEntity{
     @PrimaryGeneratedColumn()
     id:number;
 
@@ -16,7 +16,7 @@ export class Utilisateur{
     prenom:string;
 
     @Column()
-    login:string;
+    nomUtilisateur:string;
 
     @Column()
     motDePasse:string;
