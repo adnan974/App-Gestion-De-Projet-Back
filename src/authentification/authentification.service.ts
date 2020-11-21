@@ -10,14 +10,10 @@ const bcrypt = require('bcrypt');
 export class AuthentificationService {
   
     async hashPassword(password:string){
-        await bcrypt
-  .hash(password, 12)
-  .then(hash => {
-    console.log(`Hash: ${hash}`);
-    return hash;
-    // Store hash in your password DB.
-  })
-  .catch(err => console.error(err.message));
+      const salt = await bcrypt.genSalt(10)
+        const hashPassword = await bcrypt.hash(password, salt);
+        console.log(hashPassword)
+        return hashPassword;
     }
 
     comparePassword(){
