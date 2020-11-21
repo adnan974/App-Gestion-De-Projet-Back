@@ -1,9 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { AuthentificationService } from 'src/authentification/authentification.service';
 import {getConnection} from "typeorm";
-import {Utilisateur} from "./Models/utilisateur.entity"
+import {Utilisateur} from "../models/utilisateur.entity";
+
 
 @Injectable()
-export class AuthService {
+export class UserService {
+  constructor(private authentificationService:AuthentificationService){
+
+  }
+
+
+
   getHello(): string {
     return 'authenfication module';
   }
@@ -19,7 +27,8 @@ export class AuthService {
      ])
     .execute();
     */
-
+     let hashPassword = this.authentificationService.hashPassword(user.password);
+     console.log("hashpassword : "+hashPassword)
     Utilisateur.create({ civilite:{id:1,civilite:user.civilite},nom:user.lastname, prenom:user.firstname,nomUtilisateur:user.username,motDePasse:user.password }).save();
   }
 }

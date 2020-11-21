@@ -1,13 +1,13 @@
 import { Controller, Get ,Post, Body} from '@nestjs/common';
-import { AuthService } from './authentification.services';
+import { UserService } from './user.services';
 
-@Controller("signUp")
-export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+@Controller("signup")
+export class UserController {
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   getHello(): string {
-    return this.authService.getHello();
+    return this.userService.getHello();
   }
 
   @Post()
@@ -19,6 +19,6 @@ export class AuthController {
     @Body("email") email:string,
     @Body("password") password:string,
   ):any {
-    this.authService.signUp({civilite,firstname,lastname,username,email,password});
+    this.userService.signUp({civilite,firstname,lastname,username,email,password});
   }
 }
