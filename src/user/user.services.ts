@@ -21,4 +21,10 @@ export class UserService {
      let hashPassword = await this.authentificationService.hashPassword(user.password);
      Utilisateur.create({ civilite:{id:1,civilite:user.civilite},nom:user.lastname, prenom:user.firstname,nomUtilisateur:user.username,motDePasse:hashPassword }).save();
   }
+
+  searchUserByUsername(username:string) : any{
+    let anUser;
+    anUser = Utilisateur.findOne({nomUtilisateur:username});
+    console.log("utilisateur retourné : "+anUser);
+  }
 }
