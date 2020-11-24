@@ -9,14 +9,20 @@ export class AuthentificationController {
  
 
   @Post()
-  signIn(
+  async signIn(
     @Body("username") username:string,
     @Body("password") password:string,
   ){
     // On verifie si le User existe
-    this.userService.searchUserByUsername(username);
+    let user = await this.userService.searchUserByUsername(username);
+
     // Si oui on récupère le password
     // On verifie si user et mdp match
+
+    let isPasswordMatch = await this.authentificatonService.comparePassword(password,user.motDePasse);
+    if(isPasswordMatch === true){
+      return "ok"
+    }
   }
    
 

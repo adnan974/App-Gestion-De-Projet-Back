@@ -19,12 +19,15 @@ export class UserService {
   async signUp(user:{civilite:string,firstname:string,lastname:string,username:string,email:string,password:string}) {
      
      let hashPassword = await this.authentificationService.hashPassword(user.password);
+     //console.log(hashPassword);
      Utilisateur.create({ civilite:{id:1,civilite:user.civilite},nom:user.lastname, prenom:user.firstname,nomUtilisateur:user.username,motDePasse:hashPassword }).save();
   }
 
-  searchUserByUsername(username:string) : any{
+  async searchUserByUsername(username:string){
     let anUser;
-    anUser = Utilisateur.findOne({nomUtilisateur:username});
-    console.log("utilisateur retourné : "+anUser);
+    anUser = await Utilisateur.findOne({nomUtilisateur:username});
+    console.log(anUser)
+    return anUser;
+    
   }
 }

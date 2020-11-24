@@ -19,6 +19,6 @@ export class UserController {
     @Body("email") email:string,
     @Body("password") password:string,
   ):any {
-    this.userService.signUp({civilite,firstname,lastname,username,email,password});
+     this.userService.signUp({civilite,firstname,lastname,username,email,password});
   }
 }

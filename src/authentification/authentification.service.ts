@@ -16,7 +16,7 @@ export class AuthentificationService {
         return hashPassword;
     }
 
-    comparePassword(){
-
+    async comparePassword(plainPassword,hash){
+      return await bcrypt.compare(plainPassword,hash)
     }
 }
