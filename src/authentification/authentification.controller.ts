@@ -1,6 +1,7 @@
-import { Controller, Get ,Post, Body} from '@nestjs/common';
+import { Controller, Get ,Post, Body, Res} from '@nestjs/common';
 import { AuthentificationService } from './authentification.service';
 import { UserService } from '../user/user.services';
+import {Response} from "express";
 
 @Controller("signin")
 export class AuthentificationController {
@@ -10,6 +11,7 @@ export class AuthentificationController {
 
   @Post()
   async signIn(
+    @Res() res:Response,
     @Body("username") username:string,
     @Body("password") password:string,
   ){
@@ -18,11 +20,16 @@ export class AuthentificationController {
 
     // Si oui on récupère le password
     // On verifie si user et mdp match
-
+    if(user === undefined ){
+      return res.status(401).send("Utilisateur non trouvé");
+    }
     let isPasswordMatch = await this.authentificatonService.comparePassword(password,user.motDePasse);
     if(isPasswordMatch === true){
-      return "ok"
+      return {
+        acess_token: ""
+      };
     }
+    return res.status(401).send("utilisateur non trouvé");
   }
    
 
