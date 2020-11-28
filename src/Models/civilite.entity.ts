@@ -8,6 +8,7 @@ export class Civilite{
     @PrimaryGeneratedColumn()
     id:number;
 
+    // = Colonne en tant que clé primaire
     @PrimaryColumn()
     civilite:string;
 

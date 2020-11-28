@@ -26,7 +26,6 @@ export class UserService {
   async searchUserByUsername(username:string){
     let anUser;
     anUser = await Utilisateur.findOne({nomUtilisateur:username});
-    console.log(anUser)
     return anUser;
     
   }

@@ -10,6 +10,7 @@ export class UserController {
     return this.userService.getHello();
   }
 
+  // Récupère les infos du user issu du formulaire d'inscription. 
   @Post()
   signUp(
     @Body("civilite") civilite:string,
@@ -19,6 +20,7 @@ export class UserController {
     @Body("email") email:string,
     @Body("password") password:string,
   ):any {
-     this.userService.signUp({civilite,firstname,lastname,username,email,password});
+    // on demande à un service de crée le user
+    this.userService.signUp({civilite,firstname,lastname,username,email,password});
   }
 }

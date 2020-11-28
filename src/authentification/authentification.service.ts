@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { from } from 'rxjs';
 import {getConnection} from "typeorm";
 import {Utilisateur} from "../models/utilisateur.entity"
-//import {JwtService} from "@nestjs/jwt"
+import {JwtService} from "@nestjs/jwt"
 
 const bcrypt = require('bcrypt');
 
@@ -10,11 +10,12 @@ const bcrypt = require('bcrypt');
 @Injectable()
 export class AuthentificationService {
 
-    constructor(){}
+    constructor(private jwtService:JwtService){}
 
     // payload correspond aux informations qui seront stockées dans le jwt. ex. les infos d'un User
-    generateJwt(payload:Object){
-      
+    async generateJwt(payload:Object){
+      const jwt = await this.jwtService.sign(payload);
+      return jwt;
     }
 
     async hashPassword(password:string){

@@ -1,5 +1,6 @@
-import {Entity,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn,Column,ManyToOne,BaseEntity} from "typeorm";
+import {Entity,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn,Column,ManyToOne,BaseEntity, ManyToMany, JoinTable} from "typeorm";
 import {Civilite} from "./civilite.entity"
+import { Projet } from "./projet.entity";
 
 @Entity("Utilisateur")
 export class Utilisateur extends BaseEntity{
@@ -20,6 +21,10 @@ export class Utilisateur extends BaseEntity{
 
     @Column()
     motDePasse:string;
+
+    @ManyToMany(()=>Projet)
+    @JoinTable()
+    projet:Projet[];
 
     @CreateDateColumn()
     creeLe:Date;

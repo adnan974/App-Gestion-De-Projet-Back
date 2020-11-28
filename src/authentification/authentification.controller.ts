@@ -18,16 +18,19 @@ export class AuthentificationController {
     // On verifie si le User existe
     let user = await this.userService.searchUserByUsername(username);
 
-    // Si oui on récupère le password
     // On verifie si user et mdp match
     if(user === undefined ){
       return res.status(401).send("Utilisateur non trouvé");
     }
     let isPasswordMatch = await this.authentificatonService.comparePassword(password,user.motDePasse);
     if(isPasswordMatch === true){
-      return {
-        acess_token: ""
-      };
+
+      // j'ai écrit ça comme ça generateJwt({user}) car sans les accolades, user n'est pas considéré comme un plain object
+      let jwt = await this.authentificatonService.generateJwt({user})
+      res.status(200).send({
+          acess_token: jwt
+      })
+      
     }
     return res.status(401).send("utilisateur non trouvé");
   }
