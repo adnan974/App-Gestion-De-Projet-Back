@@ -1,6 +1,7 @@
-import {Entity,PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,ManyToMany, ManyToOne,JoinTable, BaseEntity} from "typeorm";
+import {Entity,PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,ManyToMany, ManyToOne,JoinTable, BaseEntity, OneToMany} from "typeorm";
 import {Tag_Projet} from "./tagProjet.entity";
 import {Etat_Projet} from "./etatProjet.entity";
+import { Tache } from "./tache.entity";
 
 @Entity("Projet")
 export class Projet extends BaseEntity{
@@ -23,6 +24,9 @@ export class Projet extends BaseEntity{
 
     @ManyToOne(()=>Etat_Projet,(etat_projet:Etat_Projet)=>etat_projet.projets)
     etatProjet:Etat_Projet;
+
+     @OneToMany(()=>Tache,(tache:Tache)=>tache.projet)
+    tache:Tache[];
 
 
 

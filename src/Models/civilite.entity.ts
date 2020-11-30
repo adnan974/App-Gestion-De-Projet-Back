@@ -13,5 +13,5 @@ export class Civilite{
     civilite:string;
 
     @OneToMany(()=>Utilisateur,(utilisateur:Utilisateur)=>utilisateur.civilite)
-    utilisateurs: Array<Utilisateur>;
+    utilisateurs: Utilisateur[];
 }

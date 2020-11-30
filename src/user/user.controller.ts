@@ -1,17 +1,18 @@
 import { Controller, Get ,Post, Body} from '@nestjs/common';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.services';
 
+@ApiTags("signup")
 @Controller("signup")
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get()
-  getHello(): string {
-    return this.userService.getHello();
-  }
 
   // Récupère les infos du user issu du formulaire d'inscription. 
   @Post()
+  @ApiOperation({
+    summary:"Add an user to the DataBase"
+  })
   signUp(
     @Body("civilite") civilite:string,
     @Body("firstname") firstname:string,
