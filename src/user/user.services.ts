@@ -2,31 +2,43 @@ import { Injectable } from '@nestjs/common';
 import { AuthentificationService } from 'src/authentification/authentification.service';
 import {getConnection} from "typeorm";
 import {Utilisateur} from "../models/utilisateur.entity";
+import { UserRepository } from './user.repository';
 
 
 @Injectable()
 export class UserService {
-  constructor(private authentificationService:AuthentificationService){
+  constructor(
+    private authentificationService:AuthentificationService,   
+    private userRepository:UserRepository
+    )
+  {
 
   }
 
 
 
-  getHello(): string {
-    return 'authenfication module';
-  }
-
-  async signUp(user:{civilite:string,firstname:string,lastname:string,username:string,email:string,password:string}) {
+  async signUp(user:{civilite:object,firstname:string,lastname:string,username:string,email:string,password:string}){
      
      let hashPassword = await this.authentificationService.hashPassword(user.password);
-     //console.log(hashPassword);
-     Utilisateur.create({ civilite:{id:1,civilite:user.civilite},nom:user.lastname, prenom:user.firstname,nomUtilisateur:user.username,motDePasse:hashPassword }).save();
+     this.userRepository.create({ civilite:user.civilite,nom:user.lastname,
+       prenom:user.firstname,nomUtilisateur:user.username,motDePasse:hashPassword }).save();
   }
 
   async searchUserByUsername(username:string){
     let anUser;
-    anUser = await Utilisateur.findOne({nomUtilisateur:username});
+    anUser = await this.userRepository.findOne({nomUtilisateur:username});
     return anUser;
     
   }
+
+  getAnUserProjects(userId){
+    return this.userRepository.getProjectByUserId(userId);
+  }
+
+  getAnUserTasks(userId){
+    return this.userRepository.getTaskByUserId(userId);
+
+  }
+
+
 }

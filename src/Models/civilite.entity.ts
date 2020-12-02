@@ -1,4 +1,4 @@
-import {Entity,PrimaryGeneratedColumn,PrimaryColumn,OneToMany} from "typeorm";
+import {Entity,PrimaryGeneratedColumn,PrimaryColumn,OneToMany, Column} from "typeorm";
 import {Utilisateur} from "./utilisateur.entity"
 
 
@@ -9,7 +9,7 @@ export class Civilite{
     id:number;
 
     // = Colonne en tant que clé primaire
-    @PrimaryColumn()
+    @Column()
     civilite:string;
 
     @OneToMany(()=>Utilisateur,(utilisateur:Utilisateur)=>utilisateur.civilite)

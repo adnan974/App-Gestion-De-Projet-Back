@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { from } from 'rxjs';
-import {getConnection} from "typeorm";
-import {Utilisateur} from "../models/utilisateur.entity"
+
 import {JwtService} from "@nestjs/jwt"
 
 const bcrypt = require('bcrypt');

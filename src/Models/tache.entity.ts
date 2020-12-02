@@ -22,9 +22,7 @@ export class Tache extends BaseEntity{
     @ManyToOne(()=>Projet,(projet:Projet)=>projet.tache)
     projet:Projet;
 
-    @ManyToMany(()=>Utilisateur)
-    @JoinTable()
-    utilisateur:Utilisateur[];
+    
 
     @CreateDateColumn()
     creeLe:Date;

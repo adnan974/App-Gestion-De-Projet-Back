@@ -2,6 +2,7 @@ import {Entity,PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,M
 import {Tag_Projet} from "./tagProjet.entity";
 import {Etat_Projet} from "./etatProjet.entity";
 import { Tache } from "./tache.entity";
+import { Utilisateur } from "./utilisateur.entity";
 
 @Entity("Projet")
 export class Projet extends BaseEntity{
@@ -11,6 +12,9 @@ export class Projet extends BaseEntity{
 
     @Column()
     description:string;
+
+    @ManyToOne(()=>Utilisateur,(utilisateur:Utilisateur)=>utilisateur.projetCree)
+    utilisateurCreation:Utilisateur;
 
     @CreateDateColumn()
     creeLe:Date;

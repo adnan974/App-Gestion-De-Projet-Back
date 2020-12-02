@@ -6,7 +6,7 @@ import {UserModule} from "./user/user.module";
 import { ProjectModule } from './project/project.module';
 import { ConfigModule } from '@nestjs/config';
 import {TypeOrmModule} from "@nestjs/typeorm"
-
+import { TaskModule } from './task/task.module';
 
 
 
@@ -31,7 +31,8 @@ import {TypeOrmModule} from "@nestjs/typeorm"
 
   UserModule,
   AuthentificationModule,
-  ProjectModule
+  ProjectModule,
+  TaskModule
 ],
   controllers: [AppController],
   providers: [AppService],

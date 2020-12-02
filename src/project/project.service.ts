@@ -1,26 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { getManager } from 'typeorm';
 import { Projet } from '../models/projet.entity';
+import { ProjectRepository } from './project.repository';
 
 
 @Injectable()
 export class ProjectService {
 
-    getAllProjects(){
-        let projectsData = Projet.find();
+    constructor(private projectRepository:ProjectRepository){
+
+    }
+
+    getAllProjects() {
+        let projectsData = this.projectRepository.find();
         return projectsData;
+    }
+
+    createProject(project){
+        this.projectRepository.create({description:project.description,
+            utilisateurCreation:project.utilisateurCreation,etatProjet:project.etatProjet,
+            tagProjet:project.tagProjet}).save()
     }
 
 
     
-    getProjectByUserId(id:number){
-        const entityManager = getManager(); 
 
-        // Problème :  utilisateurId sans guillemets ne prend pas en compte les majuscules. 
-        // SOlution : Utiliser les guillemets
-        return entityManager.query(`SELECT * FROM
-        utilisateur_projet__projet 
-        WHERE
-        "utilisateurId"=${id}`)
-    }
 }
