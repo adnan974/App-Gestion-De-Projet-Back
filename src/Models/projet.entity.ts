@@ -1,36 +1,36 @@
-import {Entity,PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,ManyToMany, ManyToOne,JoinTable, BaseEntity, OneToMany} from "typeorm";
-import {Tag_Projet} from "./tagProjet.entity";
-import {Etat_Projet} from "./etatProjet.entity";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne, JoinTable, BaseEntity, OneToMany } from "typeorm";
+import { Tag_Projet } from "./tagProjet.entity";
+import { Etat_Projet } from "./etatProjet.entity";
 import { Tache } from "./tache.entity";
 import { Utilisateur } from "./utilisateur.entity";
 
 @Entity("Projet")
-export class Projet extends BaseEntity{
+export class Projet extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
     @Column()
-    description:string;
+    description: string;
 
-    @ManyToOne(()=>Utilisateur,(utilisateur:Utilisateur)=>utilisateur.projetCree)
-    utilisateurCreation:Utilisateur;
+    @ManyToOne(() => Utilisateur, (utilisateur: Utilisateur) => utilisateur.projetCree)
+    utilisateurCreation: Utilisateur;
 
     @CreateDateColumn()
-    creeLe:Date;
+    creeLe: Date;
 
     @UpdateDateColumn()
-    modifierLe:Date;
+    modifierLe: Date;
 
-    @ManyToMany(()=>Tag_Projet)
+    @ManyToMany(() => Tag_Projet)
     @JoinTable()
-    tagProjet:Tag_Projet[];
+    tagProjet: Tag_Projet[];
 
-    @ManyToOne(()=>Etat_Projet,(etat_projet:Etat_Projet)=>etat_projet.projets)
-    etatProjet:Etat_Projet;
+    @ManyToOne(() => Etat_Projet, (etat_projet: Etat_Projet) => etat_projet.projets)
+    etatProjet: Etat_Projet;
 
-     @OneToMany(()=>Tache,(tache:Tache)=>tache.projet)
-    tache:Tache[];
+    @OneToMany(() => Tache, (tache: Tache) => tache.projet)
+    tache: Tache[];
 
 
 

@@ -9,6 +9,14 @@ export class UserTaskController {
 
   // A FAIRE/ Ajouter les status code 
   @Get(":id")
+  @ApiOperation({
+        summary:"get a task by user id"
+    })
+  @ApiParam({
+    name:"id",
+    required:true,
+    type:Number
+    })
   getProjetByUser(@Param() param){
     return this.userService.getAnUserTasks(param.id);
   }

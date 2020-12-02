@@ -1,38 +1,42 @@
-import {Entity,PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,ManyToMany, ManyToOne,JoinTable, BaseEntity} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne, JoinTable, BaseEntity } from "typeorm";
 import { Projet } from "./projet.entity";
-import {Tag_Tache} from "./tagTache.entity";
+import { Tag_Tache } from "./tagTache.entity";
 import { Utilisateur } from "./utilisateur.entity";
 
 @Entity("Tache")
-export class Tache extends BaseEntity{
+export class Tache extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
     @Column()
-    libelle:string;
+    libelle: string;
 
     @Column()
-    description:string;
+    description: string;
 
-    @ManyToMany(()=>Tag_Tache)
+    @ManyToMany(() => Tag_Tache)
     @JoinTable()
-    tagProjet:Tag_Tache[];
+    tagTache: Tag_Tache[];
 
-    @ManyToOne(()=>Projet,(projet:Projet)=>projet.tache)
-    projet:Projet;
+    @ManyToOne(() => Projet, (projet: Projet) => projet.tache, {
+        // Cette ligne signifie, que lorsque je supprime un enregistrement de projet, 
+        // Alors je vais aussi supprimer toutes les tâches qui on pour clé entrangère le projet que j'ai supprimé
+        onDelete: "CASCADE"
+    })
+    projet: Projet;
 
-    
+
 
     @CreateDateColumn()
-    creeLe:Date;
+    creeLe: Date;
 
     @UpdateDateColumn()
-    modifierLe:Date;
+    modifierLe: Date;
 
-    
 
-    
+
+
 
 
 
