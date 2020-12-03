@@ -1,5 +1,8 @@
 import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { triggerAsyncId } from 'async_hooks';
+import { CreateTaskDto } from 'src/dto/createtask.dto';
+import { UpdateTaskDto } from 'src/dto/updatetask.dto';
 import { UpdateDateColumn } from 'typeorm';
 import { TaskService } from './task.service';
 
@@ -17,7 +20,7 @@ export class TaskController {
         required: true,
         type: Object
     })
-    createTask(@Body("task") task) {
+    createTask(@Body("task") task: CreateTaskDto) {
         this.taskService.createTask(task)
 
     }
@@ -29,7 +32,7 @@ export class TaskController {
     @ApiOperation({
         summary: "update a task"
     })
-    updateTask(@Body("task") task) {
+    updateTask(@Body("task") task: UpdateTaskDto) {
         this.taskService.updateTask(task)
     }
 
@@ -45,4 +48,24 @@ export class TaskController {
     deleteTask(@Param() param) {
         this.taskService.deleteTask(param.id)
     }
+
+    @Post("/addtag")
+    @ApiOperation({
+        summary: "add a Tag to a task"
+    })
+    @ApiParam({
+        name: "taskId",
+        required: true,
+        type: Number
+    })
+    @ApiParam({
+        name: "tagId",
+        required: true,
+        type: Number
+    })
+    addATagToATask(@Body("tagId") tagId: number, @Body("taskId") taskId: number) {
+        this.taskService.addATagToATask(tagId, taskId)
+
+    }
+
 }

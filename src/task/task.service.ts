@@ -1,38 +1,38 @@
 import { Injectable } from '@nestjs/common';
+import { CreateTaskDto } from 'src/dto/createtask.dto';
+import { UpdateTaskDto } from 'src/dto/updatetask.dto';
 import { TaskTagRepository } from './tagTask.repository';
 import { TaskRepository } from './task.repository';
 
 @Injectable()
 export class TaskService {
     constructor(private taskRepository: TaskRepository, private taskTagRepository: TaskTagRepository) { }
-    async createTask(task) {
+    async createTask(task: CreateTaskDto) {
 
 
+        // Probleme rencontré : createdTask n'a pas l'attribut lié a la relation "tag tache" 
+        //                      Du coup je ne peux pas directement rajouter de tag à la tache
+        // Solution: il faut générer l'attribut soir même : createdTask.tagTache= []
+        // MAJ : ce pb apparait psq le Json n'envoyait pas de tableau d'object pour les tag_tache. Il envoyait
+        //       des objets dans un objet. Si C'est bien un tableau d'object qui est envoyé, je peux ecrire le
+        //       code ci-dessous
+        await this.taskRepository.create(task).save();
 
-        let createdTask = await this.taskRepository.create({
-            libelle: task.libelle,
-            description: task.description,
-            projet: task.projet
-        });
-
-        // A FAIRE : Actuellement ce code focntion que si il y'a 1 tag dans une tache. Trouver aussi comment faire 
-        // Dans le cas ou il y'ne a plusieurs
         // A FAIRE: que faire si les tag projet ne sont pas renseignés
-        let taskTag = await this.taskTagRepository.findOne(task.tagTache.id);
 
 
-        createdTask.tagTache = [taskTag];
 
-        this.taskRepository.save(createdTask);
+
+
     }
 
-    deleteTask(taskId) {
+    deleteTask(taskId: number) {
         this.taskRepository.delete(taskId)
     }
 
     // A FAIRE: pour l'instant j'update que le libelle et la description. Je vais aussi devoir modifier 
     // les tags et les projets associés
-    async updateTask(task) {
+    async updateTask(task: UpdateTaskDto) {
 
         let taskToUpdate = await this.taskRepository.findOne(task.id, { select: ["libelle", "description"] })
         taskToUpdate.libelle = task.libelle ? task.libelle : taskToUpdate.libelle
@@ -40,6 +40,16 @@ export class TaskService {
 
 
         this.taskRepository.update({ id: task.id }, taskToUpdate)
+    }
+
+    async addATagToATask(tagId: number, taskId: number) {
+        let taskToUpdate = await this.taskRepository.findOne(taskId, { relations: ["tagTache"] });
+        let tagToAdd = await this.taskTagRepository.findOne(tagId);
+
+        taskToUpdate.tagTache.push(tagToAdd);
+
+        this.taskRepository.save(taskToUpdate);
+
     }
 
 }

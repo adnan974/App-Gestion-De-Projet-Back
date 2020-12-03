@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AuthentificationService } from 'src/authentification/authentification.service';
+import { UserSignUpDto } from 'src/dto/usersignup.dto';
 import { ProjectRepository } from 'src/project/project.repository';
 import { AdvancedConsoleLogger, getConnection } from "typeorm";
 import { Utilisateur } from "../models/utilisateur.entity";
@@ -18,13 +19,11 @@ export class UserService {
 
 
 
-  async signUp(user: { civilite: object, firstname: string, lastname: string, username: string, email: string, password: string }) {
+  async signUp(user: UserSignUpDto) {
 
-    let hashPassword = await this.authentificationService.hashPassword(user.password);
-    this.userRepository.create({
-      civilite: user.civilite, nom: user.lastname,
-      prenom: user.firstname, nomUtilisateur: user.username, motDePasse: hashPassword
-    }).save();
+    let hashPassword = await this.authentificationService.hashPassword(user.motDePasse);
+    user.motDePasse = hashPassword;
+    this.userRepository.create(user).save();
   }
 
   async searchUserByUsername(username: string) {

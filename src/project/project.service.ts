@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { CreateProjectDto } from 'src/dto/createproject.dto';
+import { UpdateProjectDto } from 'src/dto/updateProject.dto';
 import { Tag_Tache } from 'src/models/tagTache.entity';
 import { getManager } from 'typeorm';
 import { Projet } from '../models/projet.entity';
@@ -35,24 +37,34 @@ export class ProjectService {
     // Solution : J'ai créer le projet, puis je cherché le tag avec son id et j'ai ajouté le tag dans le projet
     //  voir code ci dessous
 
-    async createProject(project) {
+    async createProject(project: CreateProjectDto) {
+        console.log(project);
+
+        await this.projectRepository.create(project).save();
+        /*
+          createdProject.tagProjet = [];
+  
+  
+          project.tagProjet.forEach(async (element) => {
+              let projectTag = await this.projectTagRepository.findOne(element.id)
+              createdProject.tagProjet.push(projectTag)
+  
+          });
+  
+          console.log(createdProject);
+          this.projectRepository.save(createdProject);
+        */
 
 
-        let createdProject = await this.projectRepository.create({
-            description: project.description,
-            utilisateurCreation: project.utilisateurCreation,
-            etatProjet: project.etatProjet,
-            //tagProjet:project.tagProjet
-        }).save()
-
-        // A FAIRE: que faire si les tag projet ne sont pas renseignés
-        // A FAIRE : Actuellement ce code focntion que si il y'a 1 tag dans une tache. Trouver aussi comment faire 
-        // Dans le cas ou il y'ne a plusieurs
-        let projectTag = await this.projectTagRepository.findOne(project.tagProjet.id)
-        console.log(projectTag)
-
-        createdProject.tagProjet = [projectTag]
-        this.projectRepository.save(createdProject)
+        /* // A FAIRE: que faire si les tag projet ne sont pas renseignés
+         Object.keys(project.tagProjet).forEach(async key => {
+             let projectTag = await this.projectTagRepository.findOne(project.tagProjet[key].id);
+             createdProject.tagProjet.push(projectTag);
+ 
+             // A FAIRE: JE vais 2 save au lieu de 1 car le tableau dans le foreach n'est pas le même que celui 
+             // en dehors, je ne sais pas comment régler ce probleme
+             this.projectRepository.save(createdProject);
+         })*/
     }
 
 
@@ -62,7 +74,7 @@ export class ProjectService {
 
     // A FAIRE: pour l'instant j'update que le libelle et l'état. Je vais aussi devoir modifier 
     // les tags et les taches associés
-    async updateProject(project) {
+    async updateProject(project: UpdateProjectDto) {
         let projectToUpdate = await this.projectRepository
             .findOne(project.id, { select: ["description", "etatProjet"] });
 
@@ -70,6 +82,16 @@ export class ProjectService {
         projectToUpdate.etatProjet = project.etatProjet ? project.etatProjet : projectToUpdate.etatProjet;
 
         this.projectRepository.update({ id: project.id }, projectToUpdate)
+
+    }
+
+    async addATagToAProject(tagId: number, projectId: number) {
+        let projectToUpdate = await this.projectRepository.findOne(projectId, { relations: ["tagProjet"] });
+        let tagToAdd = await this.projectTagRepository.findOne(tagId);
+
+        projectToUpdate.tagProjet.push(tagToAdd);
+
+        this.projectRepository.save(projectToUpdate);
 
     }
 

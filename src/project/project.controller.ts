@@ -1,5 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { CreateProjectDto } from 'src/dto/createproject.dto';
+import { UpdateProjectDto } from 'src/dto/updateProject.dto';
 import { ProjectRepository } from './project.repository';
 import { ProjectService } from './project.service';
 
@@ -28,9 +30,7 @@ export class ProjectController {
         required: true,
         type: Object
     })
-    // A FAIRE: devrai-je créer un DTO pour la création ?
-    createProject(@Body("project") project) {
-        console.log(project)
+    createProject(@Body("project") project: CreateProjectDto) {
         return this.projectService.createProject(project)
     }
 
@@ -38,7 +38,7 @@ export class ProjectController {
     @ApiOperation({
         summary: "update a project"
     })
-    updateProject(@Body("project") project) {
+    updateProject(@Body("project") project: UpdateProjectDto) {
         this.projectService.updateProject(project)
     }
 
@@ -48,6 +48,25 @@ export class ProjectController {
     })
     deleteProject(@Param() param) {
         this.projectService.deleteProject(param.id)
+    }
+
+    @Post("/addtag")
+    @ApiOperation({
+        summary: "add a Tag to a project"
+    })
+    @ApiParam({
+        name: "projectId",
+        required: true,
+        type: Number
+    })
+    @ApiParam({
+        name: "tagId",
+        required: true,
+        type: Number
+    })
+    addATagToATask(@Body("tagId") tagId: number, @Body("projectId") projectId: number) {
+        this.projectService.addATagToAProject(tagId, projectId)
+
     }
 
 

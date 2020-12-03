@@ -21,7 +21,12 @@ export class UserProjectController {
     summary: "add a task to a project"
   })
   @ApiParam({
-    name: "id",
+    name: "idProject",
+    required: true,
+    type: Number
+  })
+  @ApiParam({
+    name: "idUser",
     required: true,
     type: Number
   })
