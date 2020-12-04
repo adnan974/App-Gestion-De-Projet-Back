@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.services';
 
@@ -12,8 +12,8 @@ export class UserProjectController {
   @ApiOperation({
     summary: "get project by user id"
   })
-  getProjetByUser(@Param() param) {
-    return this.userService.getAnUserProjects(param.id);
+  getProjetByUser(@Param("id", ParseIntPipe) id) {
+    return this.userService.getAnUserProjects(id);
   }
 
   @Post()

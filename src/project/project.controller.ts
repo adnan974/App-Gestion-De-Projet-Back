@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, ValidationPipe } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreateProjectDto } from 'src/dto/createproject.dto';
 import { UpdateProjectDto } from 'src/dto/updateProject.dto';
@@ -46,8 +46,8 @@ export class ProjectController {
     @ApiOperation({
         summary: "dealete a project"
     })
-    deleteProject(@Param() param) {
-        this.projectService.deleteProject(param.id)
+    deleteProject(@Param("id", ParseIntPipe) id: number) {
+        this.projectService.deleteProject(id)
     }
 
     @Post("/addtag")

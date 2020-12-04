@@ -1,42 +1,42 @@
-import {Entity,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn,Column,ManyToOne,BaseEntity, ManyToMany, JoinTable, OneToMany} from "typeorm";
-import {Civilite} from "./civilite.entity"
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Column, ManyToOne, BaseEntity, ManyToMany, JoinTable, OneToMany } from "typeorm";
+import { Civilite } from "./civilite.entity"
 import { Projet } from "./projet.entity";
 import { Tache } from "./tache.entity";
 
 @Entity("Utilisateur")
-export class Utilisateur extends BaseEntity{
+export class Utilisateur {
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
-    @ManyToOne(()=>Civilite,(civilite:Civilite)=>civilite.utilisateurs)
+    @ManyToOne(() => Civilite, (civilite: Civilite) => civilite.utilisateurs)
     civilite: Civilite;
 
     @Column()
-    nom:string;
+    nom: string;
 
     @Column()
-    prenom:string;
+    prenom: string;
 
     @Column()
-    nomUtilisateur:string;
+    nomUtilisateur: string;
 
     @Column()
-    motDePasse:string;
+    motDePasse: string;
 
-    @OneToMany(()=>Projet,(projet:Projet)=>projet.utilisateurCreation)
-    projetCree:Projet[];
+    @OneToMany(() => Projet, (projet: Projet) => projet.utilisateurCreation)
+    projetCree: Projet[];
 
-    @ManyToMany(()=>Projet)
+    @ManyToMany(() => Projet)
     @JoinTable()
-    projet:Projet[];
+    projet: Projet[];
 
-    @ManyToMany(()=>Tache)
+    @ManyToMany(() => Tache)
     @JoinTable()
-    tache:Tache[];
+    tache: Tache[];
 
     @CreateDateColumn()
-    creeLe:Date;
+    creeLe: Date;
 
     @UpdateDateColumn()
-    modifierLe:Date;
+    modifierLe: Date;
 }

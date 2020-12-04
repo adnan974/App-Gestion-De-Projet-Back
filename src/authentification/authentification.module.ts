@@ -1,12 +1,11 @@
 import { Module } from "@nestjs/common";
 import { AuthentificationController } from "./authentification.controller";
 import { AuthentificationService } from "./authentification.service";
-import { UserService } from "../user/user.services";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { UserRepository } from "src/user/user.repository";
-import { ProjectRepository } from "src/project/project.repository";
+import { UserModule } from "src/user/user.module";
+import { UserService } from "src/user/user.services";
+
 
 @Module({
   imports: [
@@ -17,9 +16,11 @@ import { ProjectRepository } from "src/project/project.repository";
       secret: "test"
     }),
 
+    UserModule
+
   ],
   controllers: [AuthentificationController],
-  providers: [AuthentificationService, UserService, UserRepository, ProjectRepository],
+  providers: [AuthentificationService],
   exports: [AuthentificationService]
 })
 export class AuthentificationModule { }

@@ -5,7 +5,7 @@ import { Tache } from "./tache.entity";
 import { Utilisateur } from "./utilisateur.entity";
 
 @Entity("Projet")
-export class Projet extends BaseEntity {
+export class Projet {
 
     @PrimaryGeneratedColumn()
     id: number;

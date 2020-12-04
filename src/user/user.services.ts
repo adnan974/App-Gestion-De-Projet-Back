@@ -6,31 +6,30 @@ import { AdvancedConsoleLogger, getConnection } from "typeorm";
 import { Utilisateur } from "../models/utilisateur.entity";
 import { UserRepository } from './user.repository';
 
+const bcrypt = require('bcrypt');
 
 @Injectable()
 export class UserService {
   constructor(
-    private authentificationService: AuthentificationService,
     private userRepository: UserRepository,
     private projectRepository: ProjectRepository
   ) {
 
   }
 
-
-
   async signUp(user: UserSignUpDto) {
 
-    let hashPassword = await this.authentificationService.hashPassword(user.motDePasse);
+    let userToCreate = this.userRepository.create(user)
+    let hashPassword = await this.hashPassword(user.motDePasse);
     user.motDePasse = hashPassword;
-    this.userRepository.create(user).save();
+
+    this.userRepository.save(userToCreate);
   }
 
   async searchUserByUsername(username: string) {
     let anUser;
     anUser = await this.userRepository.findOne({ nomUtilisateur: username });
     return anUser;
-
   }
 
   getAnUserProjects(userId) {
@@ -57,6 +56,19 @@ export class UserService {
     userToUpdate.projet.push(projectToAssign);
     this.userRepository.save(userToUpdate);
   }
+
+  async hashPassword(password: string) {
+    const salt = await bcrypt.genSalt(10)
+    const hashPassword = await bcrypt.hash(password, salt);
+    console.log(hashPassword)
+    return hashPassword;
+  }
+
+  async comparePassword(plainPassword, hash) {
+    return await bcrypt.compare(plainPassword, hash)
+  }
+
+
 
 
 }

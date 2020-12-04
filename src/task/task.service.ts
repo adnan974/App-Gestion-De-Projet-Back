@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTaskDto } from 'src/dto/createtask.dto';
 import { UpdateTaskDto } from 'src/dto/updatetask.dto';
-import { TaskTagRepository } from './tagTask.repository';
+import { TaskTagRepository } from '../tasktag/tagTask.repository';
 import { TaskRepository } from './task.repository';
 
 @Injectable()
@@ -16,8 +16,8 @@ export class TaskService {
         // MAJ : ce pb apparait psq le Json n'envoyait pas de tableau d'object pour les tag_tache. Il envoyait
         //       des objets dans un objet. Si C'est bien un tableau d'object qui est envoyé, je peux ecrire le
         //       code ci-dessous
-        await this.taskRepository.create(task).save();
-
+        let taskToCreate = await this.taskRepository.create(task);
+        this.taskRepository.save(taskToCreate);
         // A FAIRE: que faire si les tag projet ne sont pas renseignés
 
 

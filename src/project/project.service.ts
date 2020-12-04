@@ -38,9 +38,10 @@ export class ProjectService {
     //  voir code ci dessous
 
     async createProject(project: CreateProjectDto) {
-        console.log(project);
 
-        await this.projectRepository.create(project).save();
+        let projectToAdd = await this.projectRepository.create(project);
+        this.projectRepository.save(projectToAdd);
+
         /*
           createdProject.tagProjet = [];
   

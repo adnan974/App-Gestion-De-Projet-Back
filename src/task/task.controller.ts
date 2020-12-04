@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { triggerAsyncId } from 'async_hooks';
 import { CreateTaskDto } from 'src/dto/createtask.dto';
@@ -45,8 +45,8 @@ export class TaskController {
         required: true,
         type: Number
     })
-    deleteTask(@Param() param) {
-        this.taskService.deleteTask(param.id)
+    deleteTask(@Param("id", ParseIntPipe) id: number) {
+        this.taskService.deleteTask(id)
     }
 
     @Post("/addtag")

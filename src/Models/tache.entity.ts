@@ -4,7 +4,7 @@ import { Tag_Tache } from "./tagTache.entity";
 import { Utilisateur } from "./utilisateur.entity";
 
 @Entity("Tache")
-export class Tache extends BaseEntity {
+export class Tache {
 
     @PrimaryGeneratedColumn()
     id: number;

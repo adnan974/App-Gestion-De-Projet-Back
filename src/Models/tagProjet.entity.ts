@@ -1,23 +1,23 @@
-import {Entity,PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,OneToMany, BaseEntity} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, BaseEntity } from "typeorm";
 
 
 @Entity("Tag_Projet")
-export class Tag_Projet extends BaseEntity{
+export class Tag_Projet {
 
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
     @Column()
-    libelle:string;
+    libelle: string;
 
     @Column()
-    couleurFond:string;
+    couleurFond: string;
 
     @CreateDateColumn()
-    creeLe:Date;
+    creeLe: Date;
 
     @UpdateDateColumn()
-    modifierLe:Date;
+    modifierLe: Date;
 
-    
+
 }
