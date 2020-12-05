@@ -1,15 +1,14 @@
+import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthentificationService } from './authentification.service';
-import { ExtractJwt, Strategy } from 'passport-jwt';
 
+// tag : jwt auth
+// remarque: cette strategie a pour but de vérifier l'user et le mot de passe en base. (Utile) lors d'un login
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
     constructor(private authentificationService: AuthentificationService) {
-        super({
-            JwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: 'secretKey'
-        });
+        super();
     }
 
     async validate(username: string, password: string): Promise<any> {
