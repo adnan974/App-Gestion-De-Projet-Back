@@ -8,6 +8,9 @@ export class CreateProjectDto {
     @IsString()
     description: string;
 
+    @IsString()
+    titre: string;
+
     @IsNotEmpty()
     utilisateurCreation: Utilisateur;
 

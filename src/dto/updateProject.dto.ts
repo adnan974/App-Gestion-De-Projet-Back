@@ -10,6 +10,9 @@ export class UpdateProjectDto {
     @IsString()
     description: string;
 
+    @IsString()
+    titre: string;
+
     etatProjet: Etat_Projet;
 
 }

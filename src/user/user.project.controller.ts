@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, UseGuards, Req } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/authentification/jwt-authentification.guard';
 import { UserService } from './user.services';
 
 @ApiTags("user/project")
@@ -8,12 +9,15 @@ export class UserProjectController {
   constructor(private readonly userService: UserService) { }
 
   // A FAIRE/ Ajouter les status code 
-  @Get(":id")
+  // A FAIRE et pour le rest : ajouter le guard pour le jwt et récupérer automatiquement l'id de l'user
+  @UseGuards(JwtAuthGuard)
+  @Get()
   @ApiOperation({
     summary: "get project by user id"
   })
-  getProjetByUser(@Param("id", ParseIntPipe) id) {
-    return this.userService.getAnUserProjects(id);
+  getProjetByUser(@Req() req) {
+    console.log(req.user)
+    return this.userService.getAnUserProjects(req.user.id);
   }
 
   @Post()

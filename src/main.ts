@@ -9,6 +9,11 @@ async function bootstrap() {
   // Cette pipe permet de vérifier si les données en entrée d'un controlleur sont bien celle attendue grâce à
   // des validador de type @[validator]
   app.useGlobalPipes(new ValidationPipe());
+  // tag:[cors]
+  // Ligne qui permet de parametrer la config cors sur nest js
+  // A FAIRE: n'autoriser que les req qui viennent du serv react
+  app.enableCors({ origin: true });
+
   const options = new DocumentBuilder()
     .setTitle('App geston de projet')
     .setDescription('Documentation app gestion de projet')

@@ -4,7 +4,6 @@ import { Tag_Tache } from "src/models/tagTache.entity";
 
 export class CreateTaskDto {
 
-    @IsInt()
     id: number;
 
     @IsString()

@@ -34,8 +34,7 @@ export class AuthentificationController {
 
   })
   async signIn(
-    @Body("username") username: string,
-    @Body("password") password: string,
+
     @Request() req
   ) {
     return this.authentificatonService.generateJwt(req.user);

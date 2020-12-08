@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, Req, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/authentification/jwt-authentification.guard';
 import { UserService } from './user.services';
 
 @ApiTags("user/task")
@@ -8,17 +9,14 @@ export class UserTaskController {
   constructor(private readonly userService: UserService) { }
 
   // A FAIRE/ Ajouter les status code 
-  @Get(":id")
+  @UseGuards(JwtAuthGuard)
+  @Get()
   @ApiOperation({
     summary: "get a task by user id"
   })
-  @ApiParam({
-    name: "id",
-    required: true,
-    type: Number
-  })
-  getProjetByUser(@Param("id", ParseIntPipe) id: number) {
-    return this.userService.getAnUserTasks(id);
+
+  getProjetByUser(@Req() req) {
+    return this.userService.getAnUserTasks(req.user.id);
   }
 
 }

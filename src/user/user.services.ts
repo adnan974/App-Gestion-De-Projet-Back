@@ -19,16 +19,15 @@ export class UserService {
 
   async signUp(user: UserSignUpDto) {
 
-    let userToCreate = this.userRepository.create(user)
+    let userToCreate = await this.userRepository.create(user)
     let hashPassword = await this.hashPassword(user.motDePasse);
-    user.motDePasse = hashPassword;
+    userToCreate.motDePasse = hashPassword;
 
     this.userRepository.save(userToCreate);
   }
 
   async searchUserByUsername(username: string) {
-    let anUser;
-    anUser = await this.userRepository.findOne({ nomUtilisateur: username });
+    let anUser = await this.userRepository.findOne({ nomUtilisateur: username });
     return anUser;
   }
 
@@ -60,7 +59,6 @@ export class UserService {
   async hashPassword(password: string) {
     const salt = await bcrypt.genSalt(10)
     const hashPassword = await bcrypt.hash(password, salt);
-    console.log(hashPassword)
     return hashPassword;
   }
 

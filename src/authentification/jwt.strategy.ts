@@ -18,7 +18,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
+    // Remarque : cette fonction est toujours éxécutée. Elle renvoie, les informations
+    //            du user qui sont dans le token
     async validate(payload: any) {
+        console.log(payload)
         return { id: payload.id, username: payload.username };
     }
 }

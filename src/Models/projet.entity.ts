@@ -13,6 +13,9 @@ export class Projet {
     @Column()
     description: string;
 
+    @Column()
+    titre: string;
+
     @ManyToOne(() => Utilisateur, (utilisateur: Utilisateur) => utilisateur.projetCree)
     utilisateurCreation: Utilisateur;
 

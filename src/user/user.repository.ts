@@ -6,17 +6,17 @@ export class UserRepository extends Repository<Utilisateur>{
 
 
     // A améliorer : je ne suis pas satisfait de la manière dont la requete est crée.
-   async  getProjectByUserId(userId){
-    let queryResult = await this
-    .createQueryBuilder('utilisateur')
-    .leftJoinAndSelect('utilisateur.projet', 'projet')
-    .where('utilisateur.id = :id', { id: userId })
-    .getOne();
-    
-    let userProject = queryResult.projet
+    async getProjectByUserId(userId) {
+        let queryResult = await this
+            .createQueryBuilder('utilisateur')
+            .leftJoinAndSelect('utilisateur.projet', 'projet')
+            .where('utilisateur.id = :id', { id: userId })
+            .getOne();
 
-    return userProject;
-        
+        let userProject = queryResult.projet
+
+        return userProject;
+
         /*
         this.createQueryBuilder("utilisateur").select("utilisateur.id").getMany();
         */
@@ -29,18 +29,18 @@ export class UserRepository extends Repository<Utilisateur>{
          */
     }
 
-    
-    // A améliorer : je ne suis pas satisfait de la manière dont la requete est crée.
-    async getTaskByUserId(userId){
-    let queryResult = await this
-    .createQueryBuilder('utilisateur')
-    .leftJoinAndSelect('utilisateur.tache', 'tache')
-    .where('utilisateur.id = :id', { id: userId })
-    .getOne();
-    
-    let userTask = queryResult.tache
 
-    return userTask;
+    // A améliorer : je ne suis pas satisfait de la manière dont la requete est crée.
+    async getTaskByUserId(userId) {
+        let queryResult = await this
+            .createQueryBuilder('utilisateur')
+            .leftJoinAndSelect('utilisateur.tache', 'tache')
+            .where('utilisateur.id = :id', { id: userId })
+            .getOne();
+
+        let userTask = queryResult.tache
+
+        return userTask;
     }
 
 
