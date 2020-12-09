@@ -20,6 +20,27 @@ export class ProjectController {
         return this.projectService.getAllProjects();
     }
 
+    @Get("/:id")
+    @ApiOperation({
+        summary: "get a project by id"
+    })
+    @ApiParam({
+        name: "id",
+        required: true,
+        type: Number
+    })
+    getOneProject(@Param("id") id: number) {
+        return this.projectService.getProjectById(id)
+    }
+
+    @Get("/task/:id")
+    @ApiOperation({
+        summary: "get project tasks"
+    })
+    getProjectTasks(@Param("id") id: number) {
+        return this.projectService.getProjectTasks(id);
+    }
+
 
 
     @Post("/create")

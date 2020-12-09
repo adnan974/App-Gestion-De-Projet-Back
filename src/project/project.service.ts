@@ -20,6 +20,16 @@ export class ProjectService {
         return projectsData;
     }
 
+    getProjectById(projectId: number) {
+        return this.projectRepository.findOne(projectId)
+    }
+
+    async getProjectTasks(projectId: number) {
+        let project = await this.projectRepository.findOne(projectId, { relations: ["tache"] })
+        return { task: project.tache }
+    }
+
+
     // PROBLEME rencontré : J'ai eu un pb dans cette méthode
     // contexte du pb: Cette méthode crée un projet. Il ajoute aussi les tags du projet. Or, la table Tag_projet
     //     et Projet on une relation many-to-many. Ce qui veut dire que lorsque j'ajoute des tag au projet,
