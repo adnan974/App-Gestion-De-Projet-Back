@@ -26,6 +26,11 @@ export class UserService {
     this.userRepository.save(userToCreate);
   }
 
+  async getAllUsers() {
+    let users = await this.userRepository.find({ select: ["id", "nom", "prenom", "nomUtilisateur"] })
+    return { users }
+  }
+
   async searchUserByUsername(username: string) {
     let anUser = await this.userRepository.findOne({ nomUtilisateur: username });
     return anUser;

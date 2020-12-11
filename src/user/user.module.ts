@@ -7,6 +7,7 @@ import { UserService } from './user.services';
 import { UserProjectController } from './user.project.controller'
 import { UserTaskController } from './user.task.controller';
 import { ProjectRepository } from 'src/project/project.repository';
+import { UserController } from './user.controller';
 
 
 
@@ -15,7 +16,7 @@ import { ProjectRepository } from 'src/project/project.repository';
   // forFeature: This module uses the forFeature() method to define which repositories
   // are registered in the current scope. 
   imports: [TypeOrmModule.forFeature([UserRepository, ProjectRepository])],
-  controllers: [UserSignUpController, UserProjectController, UserTaskController],
+  controllers: [UserSignUpController, UserProjectController, UserTaskController, UserController],
   providers: [UserService],
   exports: [UserService]
 
