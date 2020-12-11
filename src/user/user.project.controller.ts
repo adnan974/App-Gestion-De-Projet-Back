@@ -16,7 +16,7 @@ export class UserProjectController {
     summary: "get project by user id"
   })
   getProjetByUser(@Req() req) {
-    console.log(req.user)
+    console.log(req.user.id)
     return this.userService.getAnUserProjects(req.user.id);
   }
 

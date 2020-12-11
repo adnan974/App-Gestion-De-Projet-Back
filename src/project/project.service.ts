@@ -87,8 +87,12 @@ export class ProjectService {
     // les tags et les taches associés
     async updateProject(project: UpdateProjectDto) {
         let projectToUpdate = await this.projectRepository
-            .findOne(project.id, { select: ["description", "etatProjet"] });
+            .findOne(project.id, { select: ["titre", "description", "etatProjet"] });
 
+
+        // A FAIRE: cette partie n'accepte pas les valeurs vides alors que un client pourrait renvoyer
+        // un champs vide intentionnellement
+        projectToUpdate.titre = project.titre ? project.titre : projectToUpdate.titre;
         projectToUpdate.description = project.description ? project.description : projectToUpdate.description;
         projectToUpdate.etatProjet = project.etatProjet ? project.etatProjet : projectToUpdate.etatProjet;
 
