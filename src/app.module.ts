@@ -9,6 +9,7 @@ import { TypeOrmModule } from "@nestjs/typeorm"
 import { TaskModule } from './task/task.module';
 import { TasktagModule } from './tasktag/tasktag.module';
 import { ProjectTagModule } from './projecttag/projecttag.module';
+import { ProjectstateModule } from './projectstate/projectstate.module';
 
 
 
@@ -36,7 +37,8 @@ import { ProjectTagModule } from './projecttag/projecttag.module';
     ProjectModule,
     TaskModule,
     TasktagModule,
-    ProjectTagModule
+    ProjectTagModule,
+    ProjectstateModule
   ],
   controllers: [AppController],
   providers: [AppService],
