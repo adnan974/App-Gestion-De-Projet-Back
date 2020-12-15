@@ -10,6 +10,7 @@ export class UserRepository extends Repository<Utilisateur>{
         let queryResult = await this
             .createQueryBuilder('utilisateur')
             .leftJoinAndSelect('utilisateur.projet', 'projet')
+            .leftJoinAndSelect('projet.etatProjet', "etatprojet")
             .where('utilisateur.id = :id', { id: userId })
             .getOne();
 

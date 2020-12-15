@@ -1,17 +1,16 @@
-import {Entity,PrimaryGeneratedColumn,PrimaryColumn,OneToMany, Column} from "typeorm";
-import {Utilisateur} from "./utilisateur.entity"
+import { Entity, PrimaryGeneratedColumn, PrimaryColumn, OneToMany, Column } from "typeorm";
+import { Utilisateur } from "./utilisateur.entity"
 
 
 @Entity("Civilite")
-export class Civilite{
+export class Civilite {
 
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
-    // = Colonne en tant que clé primaire
     @Column()
-    civilite:string;
+    civilite: string;
 
-    @OneToMany(()=>Utilisateur,(utilisateur:Utilisateur)=>utilisateur.civilite)
+    @OneToMany(() => Utilisateur, (utilisateur: Utilisateur) => utilisateur.civilite)
     utilisateurs: Utilisateur[];
 }

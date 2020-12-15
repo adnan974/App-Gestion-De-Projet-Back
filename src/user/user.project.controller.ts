@@ -13,7 +13,7 @@ export class UserProjectController {
   @UseGuards(JwtAuthGuard)
   @Get()
   @ApiOperation({
-    summary: "get project by user id"
+    summary: "get projects by user id"
   })
   getProjetByUser(@Req() req) {
     console.log(req.user.id)
