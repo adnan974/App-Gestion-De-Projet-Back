@@ -10,6 +10,7 @@ import { TaskModule } from './task/task.module';
 import { TasktagModule } from './tasktag/tasktag.module';
 import { ProjectTagModule } from './projecttag/projecttag.module';
 import { ProjectstateModule } from './projectstate/projectstate.module';
+import { GenderModule } from './gender/gender.module';
 
 
 
@@ -38,7 +39,8 @@ import { ProjectstateModule } from './projectstate/projectstate.module';
     TaskModule,
     TasktagModule,
     ProjectTagModule,
-    ProjectstateModule
+    ProjectstateModule,
+    GenderModule
   ],
   controllers: [AppController],
   providers: [AppService],

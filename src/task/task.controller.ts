@@ -21,7 +21,7 @@ export class TaskController {
         type: Object
     })
     createTask(@Body("task") task: CreateTaskDto) {
-        this.taskService.createTask(task)
+        return this.taskService.createTask(task)
 
     }
 

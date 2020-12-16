@@ -26,7 +26,7 @@ export class ProjectService {
 
     async getProjectTasks(projectId: number) {
         let project = await this.projectRepository.findOne(projectId, { relations: ["tache"] })
-        return { task: project.tache }
+        return { tasks: project.tache }
     }
 
 

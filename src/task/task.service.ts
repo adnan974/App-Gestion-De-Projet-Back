@@ -17,8 +17,10 @@ export class TaskService {
         //       des objets dans un objet. Si C'est bien un tableau d'object qui est envoyé, je peux ecrire le
         //       code ci-dessous
         let taskToCreate = await this.taskRepository.create(task);
-        this.taskRepository.save(taskToCreate);
+        return this.taskRepository.save(taskToCreate);
         // A FAIRE: que faire si les tag projet ne sont pas renseignés
+
+
 
 
 

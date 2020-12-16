@@ -40,8 +40,9 @@ export class UserService {
     return this.userRepository.getProjectByUserId(userId);
   }
 
-  getAnUserTasks(userId) {
-    return this.userRepository.getTaskByUserId(userId);
+  async getAnUserTasks(userId) {
+    let userTasks = await this.userRepository.getTaskByUserId(userId);
+    return { tasks: userTasks }
 
   }
 
