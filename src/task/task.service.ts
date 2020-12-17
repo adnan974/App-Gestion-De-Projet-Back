@@ -7,6 +7,12 @@ import { TaskRepository } from './task.repository';
 @Injectable()
 export class TaskService {
     constructor(private taskRepository: TaskRepository, private taskTagRepository: TaskTagRepository) { }
+
+    async getTaskById(id: number) {
+        let aTask = await this.taskRepository.findOne(id);
+        return { task: aTask }
+    }
+
     async createTask(task: CreateTaskDto) {
 
 

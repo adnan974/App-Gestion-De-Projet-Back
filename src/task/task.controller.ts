@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { triggerAsyncId } from 'async_hooks';
 import { CreateTaskDto } from 'src/dto/createtask.dto';
@@ -10,6 +10,15 @@ import { TaskService } from './task.service';
 @Controller('task')
 export class TaskController {
     constructor(private taskService: TaskService) { }
+
+    @Get("/:id")
+    @ApiOperation({
+        summary: "get a task by Id"
+    })
+    getOneTask(@Param('id') id: number) {
+        return this.taskService.getTaskById(id);
+    }
+
 
     @Post("create")
     @ApiOperation({

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { UpdateProjectTagDTO } from 'src/dto/updateprojecttag.dto';
 import { ProjectTagService } from './projecttag.service';
@@ -9,6 +9,14 @@ import { ProjectTagService } from './projecttag.service';
 export class TaskprojectController {
 
     constructor(private projectTagService: ProjectTagService) { }
+
+    @Get()
+    @ApiOperation({
+        summary: "delete all project tag"
+    })
+    getAllProjectTags() {
+        return this.projectTagService.getAllProjectTags()
+    }
 
     @Delete("/delete/:id")
     @ApiOperation({

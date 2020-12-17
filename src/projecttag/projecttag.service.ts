@@ -6,6 +6,11 @@ import { ProjectTagRepository } from 'src/project/tagProject.repository';
 export class ProjectTagService {
     constructor(private projectTagRepository: ProjectTagRepository) { }
 
+    async getAllProjectTags() {
+        let projectTags = await this.projectTagRepository.find()
+        return { projecttags: projectTags };
+    }
+
     deleteProjectTagById(projectTagId: number) {
         this.projectTagRepository.delete(projectTagId);
     }
