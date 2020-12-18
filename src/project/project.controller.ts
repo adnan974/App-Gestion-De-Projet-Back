@@ -12,6 +12,20 @@ export class ProjectController {
 
     constructor(private readonly projectService: ProjectService, private projectRepository: ProjectRepository) { }
 
+
+    @Get("/tags/:id")
+    @ApiOperation({
+        summary: "get project tags"
+    })
+    @ApiParam({
+        name: "id",
+        required: true,
+        type: Number
+    })
+    getProjectTags(@Param("id") id: number) {
+        return this.projectService.getProjectTags(id);
+    }
+
     @Get()
     @ApiOperation({
         summary: "get all projects"

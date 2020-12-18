@@ -1,5 +1,6 @@
 import { IsInt, IsNotEmpty, IsString } from "class-validator";
 import { Etat_Projet } from "src/models/etatProjet.entity";
+import { Tag_Projet } from "src/models/tagProjet.entity";
 
 export class UpdateProjectDto {
 
@@ -14,5 +15,7 @@ export class UpdateProjectDto {
     titre: string;
 
     etatProjet: Etat_Projet;
+
+    tagProjet: Tag_Projet;
 
 }

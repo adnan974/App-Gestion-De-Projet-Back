@@ -20,6 +20,12 @@ export class ProjectService {
         return projectsData;
     }
 
+    async getProjectTags(projectId: number) {
+        let project = await this.projectRepository.findOne(projectId, { relations: ["tagProjet"] })
+        return { tags: project.tagProjet }
+
+    }
+
     getProjectById(projectId: number) {
         return this.projectRepository.findOne(projectId)
     }
@@ -87,7 +93,7 @@ export class ProjectService {
     // les tags et les taches associés
     async updateProject(project: UpdateProjectDto) {
         let projectToUpdate = await this.projectRepository
-            .findOne(project.id, { select: ["titre", "description", "etatProjet"] });
+            .findOne(project.id, { select: ["titre", "description", "etatProjet", "tagProjet"] });
 
 
         // A FAIRE: cette partie n'accepte pas les valeurs vides alors que un client pourrait renvoyer
@@ -95,6 +101,7 @@ export class ProjectService {
         projectToUpdate.titre = project.titre ? project.titre : projectToUpdate.titre;
         projectToUpdate.description = project.description ? project.description : projectToUpdate.description;
         projectToUpdate.etatProjet = project.etatProjet ? project.etatProjet : projectToUpdate.etatProjet;
+
 
         this.projectRepository.update({ id: project.id }, projectToUpdate)
 

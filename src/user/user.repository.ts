@@ -11,6 +11,7 @@ export class UserRepository extends Repository<Utilisateur>{
             .createQueryBuilder('utilisateur')
             .leftJoinAndSelect('utilisateur.projet', 'projet')
             .leftJoinAndSelect('projet.etatProjet', "etatprojet")
+            .leftJoinAndSelect('projet.tagProjet', "tagprojet")
             .where('utilisateur.id = :id', { id: userId })
             .getOne();
 
