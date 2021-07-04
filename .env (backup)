@@ -1,0 +1,8 @@
+DB_USERNAME=postgres
+DB_PASSWORD=goulamaly
+DB_PORT=5432
+DB_HOST=localhost
+DB_NAME=app-gestion-projet-n3
+JWT_SECRET=secretKey
+SERVER_PORT=8080
+
